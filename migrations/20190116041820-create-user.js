@@ -17,6 +17,15 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
+      username: {
+        type: Sequelize.STRING
+      },
+      password: {
+        type: Sequelize.STRING
+      },
+      gender: {
+        type: Sequelize.ENUM('F','M')
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
