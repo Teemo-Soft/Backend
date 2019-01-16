@@ -1,3 +1,4 @@
+require('dotenv').config()
 const { ApolloServer, gql } = require('apollo-server');
 
 // This is a (sample) collection of books we'll be able to query
@@ -48,5 +49,5 @@ const server = new ApolloServer({ typeDefs, resolvers });
 // This `listen` method launches a web-server.  Existing apps
 // can utilize middleware options, which we'll discuss later.
 server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
+  console.log(`🚀  Server ready at ${process.env.PORT}`);
 });
