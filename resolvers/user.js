@@ -18,20 +18,21 @@ module.exports = {
         },
     },
     Mutation: {
-        insert(obj, args, context, info) {
+        register(obj, args, context, info) {
             const { name, lastname } = args
+            const ins = User
             return User.findOne({
-                where: { name: name },
+                where: { name: name, lastname: lastname },
                 attributes: ['id', 'name', 'lastname'],
-            }).then(User=>{
+            }).then(async User => {
                 if(!User){
-                    User.create({
-                        name: User.name,
-                        lastname: User.lastname
+                    ins.create({
+                        name: name,
+                        lastname: lastname
                     })
-                    return "Registro good"
+                    return "Successful record!"
                 }else{
-                    return "Registro fail"
+                    return "User already registered."
                 }
             })
         }

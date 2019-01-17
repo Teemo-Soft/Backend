@@ -8,7 +8,7 @@ type User {
 }
 
 type Mutation {
-  insert(name: String!, lastname: String!): String
+  register(name: String!, lastname: String!): String
 }
 
 type Query {
