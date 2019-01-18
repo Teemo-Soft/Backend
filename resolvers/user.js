@@ -12,7 +12,7 @@ module.exports = {
                         attributes: ['id', 'name'],
                     },
                 ],
-                attributes: ['id', 'names', 'lastnames', 'gender', 'email'],
+                attributes: ['id', 'names', 'lastnames', 'identification', 'username', 'gender', 'email'],
             }).then(data =>
                 data.map(e => {
                     e.roles = e.Groups
@@ -31,7 +31,7 @@ module.exports = {
                     },
                 ],
                 where: { id: args.id },
-                attributes: ['id', 'names', 'lastnames', 'gender', 'email'],
+                attributes: ['id', 'names', 'lastnames', 'identification', 'username', 'gender', 'email'],
             }).then(e => {
                 e.roles = e.Groups
                 return e
@@ -40,21 +40,31 @@ module.exports = {
     },
     Mutation: {
         register(obj, args, context, info) {
-            const { name, lastname } = args
+            const { names, lastnames, identification, gender, username, password, email } = args
             const ins = User
             return User.findOne({
-                where: { name: name, lastname: lastname },
-                attributes: ['id', 'names', 'lastnames'],
+                where: { username: username, identification: identification },
+                attributes: ['id', 'names', 'lastnames', 'identification', 'gender', 'username', 'password', 'email'],
             }).then(async User => {
                 if (!User) {
-                    ins.create({
-                        name: name,
-                        lastname: lastname
+                    return ins.create({
+                        names: names,
+                        lastnames: lastnames,
+                        identification: identification,
+                        password: password,
+                        gender: gender,
+                        username: username,
+                        email: email
+                    }).then(us => {
+                        return "Successful record!"
+                    }).catch(err => {
+                        throw err
                     })
-                    return "Successful record!"
                 } else {
                     return "User already registered."
                 }
+            }).catch(err => {
+                throw err
             })
         }
     },

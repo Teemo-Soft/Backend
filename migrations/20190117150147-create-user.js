@@ -14,6 +14,10 @@ module.exports = {
       lastnames: {
         type: Sequelize.STRING
       },
+      identification: {
+        type: Sequelize.STRING,
+        unique: true
+      },
       gender: {
         type: Sequelize.ENUM('M', 'F'),
         allowNull: false,
@@ -26,7 +30,7 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
+        unique: false,
       },
       password: {
         type: Sequelize.STRING,

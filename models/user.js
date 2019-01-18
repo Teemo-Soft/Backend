@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     names: DataTypes.STRING,
     lastnames: DataTypes.STRING,
+    identification: DataTypes.STRING,
     gender: DataTypes.ENUM('M', 'F'),
     username: DataTypes.STRING,
     email: { type: DataTypes.STRING, validate: { isEmail: true } },

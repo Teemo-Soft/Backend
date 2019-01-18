@@ -5,6 +5,7 @@ type User {
   id: Int
   names: String
   lastnames: String
+  idetification: String
   username: String
   gender: Gender
   email: String
@@ -23,7 +24,7 @@ enum Gender{
 }
 
 type Mutation {
-  register(names: String!, lastnames: String!): String
+  register(names: String!, lastnames: String!, identification: String!,gender: String!, username: String!, password: String!, email: String!): String
 }
 
 type Query {
