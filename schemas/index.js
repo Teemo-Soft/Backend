@@ -5,6 +5,7 @@ type User {
   id: Int
   names: String
   lastnames: String
+  username: String
   gender: Gender
   email: String
   roles: [Group]

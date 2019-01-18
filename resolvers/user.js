@@ -44,7 +44,7 @@ module.exports = {
             const ins = User
             return User.findOne({
                 where: { name: name, lastname: lastname },
-                attributes: ['id', 'name', 'lastname'],
+                attributes: ['id', 'names', 'lastnames'],
             }).then(async User => {
                 if (!User) {
                     ins.create({

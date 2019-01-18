@@ -4,6 +4,8 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
       return queryInterface.bulkInsert('Groups', [{
         name: 'Super',
+        createdAt: new Date(),
+        updatedAt: new Date(),
       }], {});
   },
 

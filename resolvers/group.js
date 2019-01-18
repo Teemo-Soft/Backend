@@ -15,6 +15,7 @@ module.exports = {
               'id',
               'names',
               'lastnames',
+              'username',
               'gender',
               'email'
             ],
