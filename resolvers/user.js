@@ -4,7 +4,7 @@ var passwordHash = require('password-hash')
 module.exports = {
     Query: {
         Users(obj, args, context, info) {
-            // if (!context.users) throw new Error('Invalid user')
+            //if (!context.users) throw new Error('Invalid user')
             return User.findAll({
                 include: [
                     {
@@ -22,6 +22,7 @@ module.exports = {
             )
         },
         User(obj, args, context, info) {
+            //if (!context.users) throw new Error('Invalid user')
             const { id } = args
             return User.findOne({
                 include: [
