@@ -22,7 +22,6 @@ module.exports = {
             )
         },
         User(obj, args, context, info) {
-            // if (!context.user) throw new Error('Invalid user')
             const { id } = args
             return User.findOne({
                 include: [
@@ -57,8 +56,6 @@ module.exports = {
                     gender,
                     username,
                     email
-                }).then(us => {
-                    return us
                 }).catch(err => {
                     throw new Error('Invalid register.')
                 })
