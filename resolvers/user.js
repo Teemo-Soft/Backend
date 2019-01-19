@@ -1,4 +1,5 @@
 const { User, Group } = require('../models')
+var passwordHash = require ('password-hash')
 
 module.exports = {
     Query: {
@@ -39,19 +40,18 @@ module.exports = {
         },
     },
     Mutation: {
-        register(obj, args, context, info) {
+        async register(obj, args, context, info) {
             const { names, lastnames, identification, gender, username, password, email } = args
-            const ins = User
-            return User.findOne({
+            return await User.findOne({
                 where: { username: username, identification: identification },
                 attributes: ['id', 'names', 'lastnames', 'identification', 'gender', 'username', 'password', 'email'],
-            }).then(async User => {
-                if (!User) {
-                    return ins.create({
+            }).then(user => {
+                if (!user) {
+                    return User.create({
                         names: names,
                         lastnames: lastnames,
                         identification: identification,
-                        password: password,
+                        password: passwordHash.generate(password),
                         gender: gender,
                         username: username,
                         email: email
