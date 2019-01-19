@@ -5,7 +5,7 @@ type User {
   id: Int
   names: String
   lastnames: String
-  idetification: String
+  identification: String
   username: String
   gender: Gender
   email: String
