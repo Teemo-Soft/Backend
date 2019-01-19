@@ -39,6 +39,7 @@ module.exports = {
             })
         },
     },
+    
     Mutation: {
         async register(obj, args, context, info) {
             const { names, lastnames, identification, gender, username, email } = args

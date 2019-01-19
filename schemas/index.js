@@ -1,6 +1,18 @@
 const { gql } = require('apollo-server')
 
 module.exports = gql`
+
+type Query {
+  Users: [User]
+  User(id: Int!): User
+  Groups: [Group]
+}
+
+type Mutation {
+  login(username: String!, password: String!): Session
+  register(names: String!, lastnames: String!, identification: String!,gender: String!, username: String!, password: String!, email: String!): User
+}
+
 type User {
   id: Int
   names: String
@@ -23,13 +35,7 @@ enum Gender{
   M
 }
 
-type Mutation {
-  register(names: String!, lastnames: String!, identification: String!,gender: String!, username: String!, password: String!, email: String!): User
-}
-
-type Query {
-  Users: [User]
-  User(id: Int!): User
-  Groups: [Group]
+type Session {
+  token: String!
 }
 `

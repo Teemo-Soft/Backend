@@ -1,26 +1,41 @@
 require('dotenv').config()
-const { ApolloServer, gql } = require('apollo-server');
-
-// Type definitions define the "shape" of your data and specify
-// which ways the data can be fetched from the GraphQL server.
+const { ApolloServer, gql } = require('apollo-server-express')
+const express = require('express')
+const bodyParser = require('body-parser')
+const cors = require('./middlewares/cors')
+const jwt = require('./helpers/jwt')
+const { User } = require('./models')
 const typeDefs = require('./schemas')
 const resolvers = require('./resolvers')
 
-// Resolvers define the technique for fetching the types in the
-// schema.  We'll retrieve books from the "books" array above.
-// const resolvers = {
-//   Query: {
-//     books: () => books,
-//   },
-// };
+const app = express() // Express instance
+const apollo = new ApolloServer({ 
+  typeDefs, 
+  resolvers,
+  async context({ req }) {   
+    let token = req.headers.authorization || ''
+    token = token.split(' ')
+    if (token[0] === 'Bearer') {
+      let userId = await jwt.decodeToken(token[1])
+      let user = await User.findById(userId)
+      return { user }
+    }
+    return null
+  },
+});
 
-// In the most basic sense, the ApolloServer can be started
-// by passing type definitions (typeDefs) and the resolvers
-// responsible for fetching the data for those types.
-const server = new ApolloServer({ typeDefs, resolvers });
+// Middlewares
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+app.post('*', cors)
+apollo.applyMiddleware({ app })
 
 // This `listen` method launches a web-server.  Existing apps
 // can utilize middleware options, which we'll discuss later.
-server.listen().then(({ url }) => {
+app.listen(process.env.PORT, () =>
+  console.log(`🚀  Server ready at ${"http://localhost:"+process.env.PORT+"/graphql"}`)
+)
+
+/*apollo.listen().then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
-});
+})*/

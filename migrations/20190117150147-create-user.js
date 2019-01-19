@@ -36,12 +36,21 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      facebookId: {
+        type: Sequelize.STRING
+      },
+      googleId: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
+        type: Sequelize.DATE,
+      },
+      deletedAt: {
         type: Sequelize.DATE,
       },
     })

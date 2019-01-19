@@ -1,30 +1,24 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Roles', {
+    return queryInterface.createTable('Apps', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+      name: {
+        type: Sequelize.STRING
       },
-      groupId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Groups',
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+      appid: {
+        type: Sequelize.STRING
+      },
+      token: {
+        type: Sequelize.STRING
+      },
+      origin: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -40,6 +34,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Roles');
+    return queryInterface.dropTable('Apps');
   }
 };
