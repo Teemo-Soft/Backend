@@ -24,7 +24,7 @@ enum Gender{
 }
 
 type Mutation {
-  register(names: String!, lastnames: String!, identification: String!,gender: String!, username: String!, password: String!, email: String!): String
+  register(names: String!, lastnames: String!, identification: String!,gender: String!, username: String!, password: String!, email: String!): User
 }
 
 type Query {

@@ -1,5 +1,5 @@
 const { User, Group } = require('../models')
-var passwordHash = require ('password-hash')
+var passwordHash = require('password-hash')
 
 module.exports = {
     Query: {
@@ -32,7 +32,7 @@ module.exports = {
                         attributes: ['id', 'name'],
                     },
                 ],
-                where: { id: id },
+                where: { id },
                 attributes: ['id', 'names', 'lastnames', 'identification', 'username', 'gender', 'email'],
             }).then(e => {
                 e.roles = e.Groups
@@ -42,31 +42,29 @@ module.exports = {
     },
     Mutation: {
         async register(obj, args, context, info) {
-            const { names, lastnames, identification, gender, username, password, email } = args
-            return await User.findOne({
-                where: { username: username, identification: identification },
+            const { names, lastnames, identification, gender, username, email } = args
+            const password = passwordHash.generate(args.password)
+            const user = await User.findOne({
+                where: { username, identification },
                 attributes: ['id', 'names', 'lastnames', 'identification', 'gender', 'username', 'password', 'email'],
-            }).then(user => {
-                if (!user) {
-                    return User.create({
-                        names: names,
-                        lastnames: lastnames,
-                        identification: identification,
-                        password: passwordHash.generate(password),
-                        gender: gender,
-                        username: username,
-                        email: email
-                    }).then(us => {
-                        return "Successful record!"
-                    }).catch(err => {
-                        throw err
-                    })
-                } else {
-                    return "User already registered."
-                }
-            }).catch(err => {
-                throw err
             })
+            if (!user) {
+                return User.create({
+                    names,
+                    lastnames,
+                    identification,
+                    password,
+                    gender,
+                    username,
+                    email
+                }).then(us => {
+                    return us
+                }).catch(err => {
+                    throw new Error('Invalid register.')
+                })
+            } else {
+                throw new Error('User already registered.')
+            }
         }
     },
 }
