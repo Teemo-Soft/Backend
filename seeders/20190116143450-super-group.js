@@ -6,6 +6,11 @@ module.exports = {
         name: 'Super',
         createdAt: new Date(),
         updatedAt: new Date(),
+      },
+      {
+        name: 'Public',
+        createdAt: new Date(),
+        updatedAt: new Date(),
       }], {});
   },
 

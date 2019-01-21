@@ -1,4 +1,4 @@
-const { User, Group } = require('../models')
+const { User, Group, Role } = require('../models')
 const passwordHash = require('password-hash')
 
 module.exports = {
@@ -42,7 +42,7 @@ module.exports = {
     },
 
     Mutation: {
-        async register(obj, args) {
+        async registerPublic(obj, args) {
             const { identification, username } = args
             args.password = passwordHash.generate(args.password)
             const user = await User.findOne({
@@ -50,7 +50,12 @@ module.exports = {
                 attributes: ['id', 'names', 'lastnames', 'identification', 'gender', 'username', 'password', 'email'],
             })
             if (user) throw new Error('User already registered.')
-            return User.create(args)
+            const userCreated = await User.create(args)
+            Role.create({
+                userId: userCreated.id,
+                groupId: 2
+            })
+            return userCreated
         }
     },
 }

@@ -10,7 +10,7 @@ type Query {
 
 type Mutation {
   login(username: String!, password: String!): Session
-  register(names: String!, lastnames: String!, identification: String!,gender: String!, username: String!, password: String!, email: String!): User
+  registerPublic(names: String!, lastnames: String!, identification: String!,gender: String!, username: String!, password: String!, email: String!): User
 }
 
 type User {
