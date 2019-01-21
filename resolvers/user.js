@@ -1,5 +1,5 @@
 const { User, Group } = require('../models')
-var passwordHash = require('password-hash')
+const passwordHash = require('password-hash')
 
 module.exports = {
     Query: {
@@ -40,30 +40,17 @@ module.exports = {
             })
         },
     },
-    
+
     Mutation: {
-        async register(obj, args, context, info) {
-            const { names, lastnames, identification, gender, username, email } = args
-            const password = passwordHash.generate(args.password)
+        async register(obj, args) {
+            const { identification, username } = args
+            args.password = passwordHash.generate(args.password)
             const user = await User.findOne({
                 where: { username, identification },
                 attributes: ['id', 'names', 'lastnames', 'identification', 'gender', 'username', 'password', 'email'],
             })
-            if (!user) {
-                return User.create({
-                    names,
-                    lastnames,
-                    identification,
-                    password,
-                    gender,
-                    username,
-                    email
-                }).catch(err => {
-                    throw new Error('Invalid register.')
-                })
-            } else {
-                throw new Error('User already registered.')
-            }
+            if (user) throw new Error('User already registered.')
+            return User.create(args)
         }
     },
 }

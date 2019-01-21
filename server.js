@@ -33,7 +33,7 @@ apollo.applyMiddleware({ app })
 // This `listen` method launches a web-server.  Existing apps
 // can utilize middleware options, which we'll discuss later.
 app.listen(process.env.PORT, () =>
-  console.log(`🚀  Server ready at ${"http://localhost:"+process.env.PORT+"/graphql"}`)
+  console.log(`🚀  Server ready at ${"http://"+process.env.DB_D_HOSTNAME+":"+process.env.PORT+"/graphql"}`)
 )
 
 /*apollo.listen().then(({ url }) => {

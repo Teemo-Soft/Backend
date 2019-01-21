@@ -12,11 +12,24 @@ module.exports = {
         .then(async user => {
           if (!user) throw new Error('Invalid user')          
 
-          let match = await passwordHash.verify(password, user.password)
-
-          if (!match) throw new Error('Invalid password')          
-            const token = await jwt.generateToken(user.id)
-            return { token }
+          // if(password == user.password) {
+          //   const token = await jwt.generateToken(user.id)
+          //   return { token }
+          // } else {
+          //   throw new Error('Invalid password')
+          // }
+          let vaidationPassw = passwordHash.isHashed(user.password)
+          if(vaidationPassw){
+            let match = await passwordHash.verify(password, user.password)
+            if (match) {
+              const token = await jwt.generateToken(user.id)
+              return { token }
+            } else {
+              throw new Error('Invalid password')
+            }
+          }else{
+            throw new Error('Invalid password')
+          }
         })
         .catch(err => {
           throw err
