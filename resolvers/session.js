@@ -1,4 +1,4 @@
-//const bcrypt = require('bcrypt')
+const passwordHash = require('password-hash')
 const jwt = require('../helpers/jwt')
 const { User } = require('../models')
 
@@ -10,25 +10,13 @@ module.exports = {
         where: { username },
       })
         .then(async user => {
-          if (!user) {
-            throw new Error('Invalid user')
-          }
+          if (!user) throw new Error('Invalid user')          
 
-          if(password == user.password) {
+          let match = await passwordHash.verify(password, user.password)
+
+          if (!match) throw new Error('Invalid password')          
             const token = await jwt.generateToken(user.id)
             return { token }
-          } else {
-            throw new Error('Invalid password')
-          }
-
-          /*let match = await bcrypt.compare(password, user.password)
-
-          if (match) {
-            const token = await jwt.generateToken(user.id)
-            return { token }
-          } else {
-            throw new Error('Invalid password')
-          }*/
         })
         .catch(err => {
           throw err
