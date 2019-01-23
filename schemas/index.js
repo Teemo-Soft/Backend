@@ -24,10 +24,17 @@ type User {
   roles: [Group]
 }
 
+type Permission {
+  id: Int
+  groupId: Int
+  actionId: Int
+}
+
 type Group {
   id: Int!
   name: String!
   users: [User]
+  permissions: [Permission]
 }
 
 enum Gender{
