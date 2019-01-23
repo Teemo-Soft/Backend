@@ -10,6 +10,7 @@ type Query {
 
 type Mutation {
   login(username: String!, password: String!): Session
+  loginGoogle(tokenG: String!): Session
   registerPublic(names: String!, lastnames: String!, identification: String!,gender: String!, username: String!, password: String!, email: String!): User
 }
 
@@ -43,6 +44,7 @@ enum Gender{
 }
 
 type Session {
+  status: Boolean
   token: String!
 }
 `
