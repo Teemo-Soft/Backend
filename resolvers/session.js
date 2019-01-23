@@ -51,7 +51,7 @@ module.exports = {
           const token = await jwt.generateToken(user.id)
           return { token }
         }else{
-          var username = payload.email.replace(/@.*$/,"");
+          let username = payload.email.replace(/@.*$/,"");
           const userCreated = await User.create({
             names: payload.given_name,
             lastnames: payload.family_name,
@@ -61,7 +61,7 @@ module.exports = {
             password: 1,
             googleId: payload.sub
           })
-          Role.create({
+          roleCreated = await Role.create({
             userId: userCreated.id,
             groupId: 2
           })
