@@ -3,7 +3,7 @@ const passwordHash = require('password-hash')
 
 module.exports = {
     Query: {
-        Users(obj, args, context, info) {
+        Users(obj, args, context) {
             if (!context.user) throw new Error('Invalid user')
             return User.findAll({
                 include: [

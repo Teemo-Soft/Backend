@@ -2,8 +2,8 @@ const { Group, User } = require('../models')
 
 module.exports = {
   Query: {
-    Groups(obj, args, context, info) {
-      // if (!context.user) throw new Error('Invalid user')
+    Groups(obj, args, context) {
+      if (!context.user) throw new Error('Invalid user')
 
       return Group.findAll({
         attributes: ['id', 'name'],
@@ -27,6 +27,17 @@ module.exports = {
               },
             ],
           },
+          {
+            model: Action,
+            as: 'Actions',
+            attributes: ['id', 'name', 'description', 'accessPoint'],
+            include: [
+              {
+                model: Route,
+                attributes: ['id', 'name', 'description', 'accessPoint'],
+              },
+            ],
+          }
         ],
       }).then(groups =>
         groups.map(group => {
