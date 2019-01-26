@@ -1,4 +1,4 @@
-const { Group, User } = require('../models')
+const { Group, User, Action, Route } = require('../models')
 
 module.exports = {
   Query: {
@@ -30,7 +30,7 @@ module.exports = {
           {
             model: Action,
             as: 'Actions',
-            attributes: ['id', 'name', 'description', 'accessPoint'],
+            attributes: ['id', 'name', 'description'],
             include: [
               {
                 model: Route,

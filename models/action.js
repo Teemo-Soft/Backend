@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     description: DataTypes.STRING,
     routeId: DataTypes.INTEGER
-  }, {});
+  }, {paranoid: true});
   Action.associate = function(models) {
     // associations can be defined here
     Action.belongsToMany(models.Group, { as: 'Groups', through: 'Permission', foreignKey: 'actionId' })

@@ -61,7 +61,7 @@ module.exports = {
             password: 1,
             googleId: payload.sub
           })
-          roleCreated = await Role.create({
+          await Role.create({
             userId: userCreated.id,
             groupId: 2
           })
