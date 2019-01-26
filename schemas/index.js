@@ -43,8 +43,7 @@ enum Gender{
   M
 }
 
-type Session {
-  status: Boolean
+type Session{
   token: String!
 }
 `
